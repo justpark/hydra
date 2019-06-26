@@ -31,6 +31,7 @@ func resetConfig() {
 	viper.Set(configuration.ViperKeyGetCookieSecrets, nil)
 	viper.Set(configuration.ViperKeyGetSystemSecret, nil)
 	viper.Set(configuration.ViperKeyLogoutRedirectURL, nil)
+	viper.Set(configuration.ViperKeyUserValidationURL, nil)
 	viper.Set(configuration.ViperKeyLoginURL, nil)
 	viper.Set(configuration.ViperKeyConsentURL, nil)
 	viper.Set(configuration.ViperKeyErrorURL, nil)

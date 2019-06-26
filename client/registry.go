@@ -13,6 +13,7 @@ type InternalRegistry interface {
 
 type Registry interface {
 	ClientValidator() *Validator
+	UserValidator() *UserValidator
 	ClientManager() Manager
 	ClientHasher() fosite.Hasher
 }

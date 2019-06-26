@@ -44,6 +44,7 @@ type RegistryBase struct {
 	fh           fosite.Hasher
 	kh           *jwk.Handler
 	cv           *client.Validator
+	uv           *client.UserValidator
 	hh           *healthx.Handler
 	kg           map[string]jwk.KeyGenerator
 	km           jwk.Manager
@@ -168,6 +169,13 @@ func (m *RegistryBase) ClientValidator() *client.Validator {
 		m.cv = client.NewValidator(m.c)
 	}
 	return m.cv
+}
+
+func (m *RegistryBase) UserValidator() *client.UserValidator {
+	if m.uv == nil {
+		m.uv = client.NewUserValidator(m.c)
+	}
+	return m.uv
 }
 
 func (m *RegistryBase) KeyHandler() *jwk.Handler {
