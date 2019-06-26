@@ -27,8 +27,8 @@ func (v *UserValidator) Validate(username string, password string) error {
 		"password": {password},
 	}
 
-	_, err := v.c.PostForm(v.conf.UserValidationURL().String(), formData)
-	if err != nil {
+	response, err := v.c.PostForm(v.conf.UserValidationURL().String(), formData)
+	if err != nil || response.StatusCode != 200 {
 		return fosite.ErrNotFound
 	}
 
