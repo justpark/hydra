@@ -73,8 +73,8 @@ func (s *FositeMemoryStore) GetClient(ctx context.Context, id string) (fosite.Cl
 	return s.r.ClientManager().GetClient(ctx, id)
 }
 
-func (s *FositeMemoryStore) Authenticate(ctx context.Context, id string, secret []byte) (*client.Client, error) {
-	return s.r.ClientManager().Authenticate(ctx, id, secret)
+func (s *FositeMemoryStore) Authenticate(ctx context.Context, name string, secret string) error {
+	return errors.New("Invalid credentials")
 }
 
 func (s *FositeMemoryStore) CreateClient(ctx context.Context, c *client.Client) error {

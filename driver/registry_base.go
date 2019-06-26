@@ -280,6 +280,7 @@ func (m *RegistryBase) OAuth2Provider() fosite.OAuth2Provider {
 			compose.OAuth2AuthorizeExplicitFactory,
 			compose.OAuth2AuthorizeImplicitFactory,
 			compose.OAuth2ClientCredentialsGrantFactory,
+			compose.OAuth2ResourceOwnerPasswordCredentialsFactory,
 			compose.OAuth2RefreshTokenGrantFactory,
 			compose.OpenIDConnectExplicitFactory,
 			compose.OpenIDConnectHybridFactory,

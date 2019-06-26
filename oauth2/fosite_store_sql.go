@@ -205,8 +205,8 @@ func (s *FositeSQLStore) GetClient(ctx context.Context, id string) (fosite.Clien
 	return s.r.ClientManager().GetClient(ctx, id)
 }
 
-func (s *FositeSQLStore) Authenticate(ctx context.Context, id string, secret []byte) (*client.Client, error) {
-	return s.r.ClientManager().Authenticate(ctx, id, secret)
+func (s *FositeSQLStore) Authenticate(ctx context.Context, name string, secret string) error {
+	return errors.New("Invalid credentials")
 }
 
 func (s *FositeSQLStore) CreateClient(ctx context.Context, c *client.Client) error {
