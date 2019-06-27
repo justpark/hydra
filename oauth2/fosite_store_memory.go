@@ -77,7 +77,7 @@ func (s *FositeMemoryStore) Authenticate(ctx context.Context, name string, secre
 	return s.r.UserValidator().Validate(name, secret)
 }
 
-func (s *FositeMemoryStore) SocialAuth(ctx context.Context, network string, accessToken string) error {
+func (s *FositeMemoryStore) SocialAuth(ctx context.Context, network string, accessToken string) (client.UserIdentityResponse, error) {
 	return s.r.SocialValidator().Validate(network, accessToken)
 }
 

@@ -545,7 +545,8 @@ func (h *Handler) TokenHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if accessRequest.GetGrantTypes().Exact("client_credentials") {
+	// Added grant types for password and social grant - @daursu
+	if accessRequest.GetGrantTypes().HasOneOf("client_credentials", "password", "social") {
 		var accessTokenKeyID string
 		if h.c.AccessTokenStrategy() == "jwt" {
 			accessTokenKeyID, err = h.r.AccessTokenJWTStrategy().GetPublicKeyID(r.Context())
@@ -571,15 +572,6 @@ func (h *Handler) TokenHandler(w http.ResponseWriter, r *http.Request) {
 		for _, audience := range accessRequest.GetRequestedAudience() {
 			if h.r.AudienceStrategy()(accessRequest.GetClient().GetAudience(), []string{audience}) == nil {
 				accessRequest.GrantAudience(audience)
-			}
-		}
-	}
-
-	// Added scopes to password and social grant - @daursu
-	if accessRequest.GetGrantTypes().HasOneOf("password", "social") {
-		for _, scope := range accessRequest.GetRequestedScopes() {
-			if h.r.ScopeStrategy()(accessRequest.GetClient().GetScopes(), scope) {
-				accessRequest.GrantScope(scope)
 			}
 		}
 	}

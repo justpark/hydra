@@ -47,7 +47,12 @@ func (c *SocialGrantHandler) HandleTokenEndpointRequest(ctx context.Context, req
 	accessToken := request.GetRequestForm().Get("access_token")
 	if network == "" || accessToken == "" {
 		return errors.WithStack(fosite.ErrInvalidRequest.WithHint("Network or access_token are missing from the POST body."))
-	} else if err := c.SocialGrantStorage.SocialAuth(ctx, network, accessToken); errors.Cause(err) == fosite.ErrNotFound {
+	}
+
+	// Attempt to log the user in
+	userIdentity, err := c.SocialGrantStorage.SocialAuth(ctx, network, accessToken)
+
+	if errors.Cause(err) == fosite.ErrNotFound {
 		return errors.WithStack(fosite.ErrRequestUnauthorized.WithHint("Unable to authenticate the provided network and access_token credentials.").WithDebug(err.Error()))
 	} else if err != nil {
 		return errors.WithStack(fosite.ErrServerError.WithDebug(err.Error()))
@@ -55,6 +60,10 @@ func (c *SocialGrantHandler) HandleTokenEndpointRequest(ctx context.Context, req
 
 	// Credentials must not be passed around, potentially leaking to the database!
 	delete(request.GetRequestForm(), "access_token")
+
+	// Update the username to be the UserId
+	session := request.GetSession().(*Session)
+	session.Username = userIdentity.UserId
 
 	request.GetSession().SetExpiresAt(fosite.AccessToken, time.Now().UTC().Add(c.AccessTokenLifespan).Round(time.Second))
 	if c.RefreshTokenLifespan > -1 {
