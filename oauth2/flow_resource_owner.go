@@ -64,6 +64,8 @@ func (c *ResourceOwnerPasswordCredentialsGrantHandler) HandleTokenEndpointReques
 	// Update the username to be the UserId - @daursu
 	session := request.GetSession().(*Session)
 	session.Username = userIdentity.UserId
+	session.Claims.Subject = userIdentity.UserId
+	session.Claims.Add("properties", userIdentity)
 
 	request.GetSession().SetExpiresAt(fosite.AccessToken, time.Now().UTC().Add(c.AccessTokenLifespan).Round(time.Second))
 	if c.RefreshTokenLifespan > -1 {
