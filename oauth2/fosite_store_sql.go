@@ -205,7 +205,7 @@ func (s *FositeSQLStore) GetClient(ctx context.Context, id string) (fosite.Clien
 	return s.r.ClientManager().GetClient(ctx, id)
 }
 
-func (s *FositeSQLStore) Authenticate(ctx context.Context, name string, secret string) error {
+func (s *FositeSQLStore) Authenticate(ctx context.Context, name string, secret string) (client.UserIdentityResponse, error) {
 	return s.r.UserValidator().Validate(name, secret)
 }
 

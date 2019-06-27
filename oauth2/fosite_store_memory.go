@@ -73,7 +73,7 @@ func (s *FositeMemoryStore) GetClient(ctx context.Context, id string) (fosite.Cl
 	return s.r.ClientManager().GetClient(ctx, id)
 }
 
-func (s *FositeMemoryStore) Authenticate(ctx context.Context, name string, secret string) error {
+func (s *FositeMemoryStore) Authenticate(ctx context.Context, name string, secret string) (client.UserIdentityResponse, error) {
 	return s.r.UserValidator().Validate(name, secret)
 }
 
