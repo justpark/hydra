@@ -77,6 +77,10 @@ func (s *FositeMemoryStore) Authenticate(ctx context.Context, name string, secre
 	return s.r.UserValidator().Validate(name, secret)
 }
 
+func (s *FositeMemoryStore) SocialAuth(ctx context.Context, network string, accessToken string) error {
+	return s.r.UserValidator().Validate(network, accessToken)
+}
+
 func (s *FositeMemoryStore) CreateClient(ctx context.Context, c *client.Client) error {
 	return s.r.ClientManager().CreateClient(ctx, c)
 

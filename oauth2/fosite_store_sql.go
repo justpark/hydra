@@ -209,6 +209,10 @@ func (s *FositeSQLStore) Authenticate(ctx context.Context, name string, secret s
 	return s.r.UserValidator().Validate(name, secret)
 }
 
+func (s *FositeSQLStore) SocialAuth(ctx context.Context, network string, accessToken string) error {
+	return s.r.UserValidator().Validate(network, accessToken)
+}
+
 func (s *FositeSQLStore) CreateClient(ctx context.Context, c *client.Client) error {
 	return s.r.ClientManager().CreateClient(ctx, c)
 

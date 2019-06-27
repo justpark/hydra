@@ -575,6 +575,15 @@ func (h *Handler) TokenHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	// Added scopes to password and social grant - @daursu
+	if accessRequest.GetGrantTypes().HasOneOf("password", "social") {
+		for _, scope := range accessRequest.GetRequestedScopes() {
+			if h.r.ScopeStrategy()(accessRequest.GetClient().GetScopes(), scope) {
+				accessRequest.GrantScope(scope)
+			}
+		}
+	}
+
 	accessResponse, err := h.r.OAuth2Provider().NewAccessResponse(ctx, accessRequest)
 	if err != nil {
 		x.LogError(err, h.r.Logger())
