@@ -59,6 +59,7 @@ type Provider interface {
 	LoginURL() *url.URL
 	LogoutURL() *url.URL
 	UserValidationURL() *url.URL
+	SocialValidationURL() *url.URL
 }
 
 func MustValidate(l logrus.FieldLogger, p Provider) {

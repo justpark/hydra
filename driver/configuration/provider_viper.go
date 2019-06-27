@@ -57,6 +57,7 @@ const (
 	ViperKeyGetSystemSecret                = "secrets.system"
 	ViperKeyLogoutRedirectURL              = "urls.post_logout_redirect"
 	ViperKeyUserValidationURL              = "urls.user_validation"
+	ViperKeySocialValidationURL            = "urls.social_validation"
 	ViperKeyLoginURL                       = "urls.login"
 	ViperKeyLogoutURL                      = "urls.logout"
 	ViperKeyConsentURL                     = "urls.consent"
@@ -341,6 +342,10 @@ func (v *ViperProvider) fallbackURL(path string, host string, port int) string {
 
 func (v *ViperProvider) UserValidationURL() *url.URL {
 	return urlRoot(urlx.ParseOrFatal(v.l, viperx.GetString(v.l, ViperKeyUserValidationURL, v.publicFallbackURL("oauth2/credentials/validate"), "OAUTH2_USER_VALIDATION_URL")))
+}
+
+func (v *ViperProvider) SocialValidationURL() *url.URL {
+	return urlRoot(urlx.ParseOrFatal(v.l, viperx.GetString(v.l, ViperKeySocialValidationURL, v.publicFallbackURL("oauth2/social/validate"), "OAUTH2_SOCIAL_VALIDATION_URL")))
 }
 
 func (v *ViperProvider) LoginURL() *url.URL {
