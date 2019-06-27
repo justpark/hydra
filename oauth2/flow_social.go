@@ -2,7 +2,6 @@ package oauth2
 
 import (
 	"context"
-	"fmt"
 	"github.com/ory/fosite"
 	"github.com/ory/fosite/handler/oauth2"
 	"github.com/pkg/errors"
@@ -70,8 +69,6 @@ func (c *SocialGrantHandler) PopulateTokenEndpointResponse(ctx context.Context, 
 	if !requester.GetGrantTypes().Exact("social") {
 		return errors.WithStack(fosite.ErrUnknownRequest)
 	}
-
-	fmt.Println(requester.GetGrantedScopes())
 
 	var refresh, refreshSignature string
 	if requester.GetGrantedScopes().HasOneOf("offline", "offline_access") {
