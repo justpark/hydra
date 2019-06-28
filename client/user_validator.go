@@ -22,6 +22,13 @@ func NewUserValidator(conf Configuration) *UserValidator {
 	}
 }
 
+func NewUserValidatorWithHttp(conf Configuration, httpClient *http.Client) *UserValidator {
+	return &UserValidator{
+		c:    httpClient,
+		conf: conf,
+	}
+}
+
 func (v *UserValidator) Validate(username string, password string) (UserIdentityResponse, error) {
 	formData := url.Values{
 		"username": {username},
